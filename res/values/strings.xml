@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Happiness</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hi</string>
+    <string name="exercise_you_happiness">Exercise You Happiness</string>
+    <string name="about_happiness">About Happiness</string>
+    <string name="title_activity_exercise">Exercise</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+</resources>
