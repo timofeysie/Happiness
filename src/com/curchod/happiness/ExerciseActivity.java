@@ -1,12 +1,16 @@
 package com.curchod.happiness;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
@@ -32,6 +36,8 @@ public class ExerciseActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
+        String method = "onCreate";
+        Log.i(DEBUG_TAG, method+" build 6");
         setup();
         getImages();
         loadImages();
@@ -42,23 +48,44 @@ public class ExerciseActivity extends Activity
     	String method = "loadImages";
     	String positive_image = positive_images[current_round];
     	String negative_image = negative_images[current_round];
-    	image1 = (ImageView)findViewById(R.id.imageView1);
-    	image2 = (ImageView)findViewById(R.id.imageView2);
-    	image1.setImageBitmap(BitmapFactory.decodeFile("images/positive/"+positive_image));
-    	image2.setImageBitmap(BitmapFactory.decodeFile("images/negative/"+negative_image));
+    	//image1 = (ImageView)findViewById(R.id.imageView1);
+    	//image2 = (ImageView)findViewById(R.id.imageView2);
+    	//image1.setImageBitmap(BitmapFactory.decodeFile("images/positive/"+positive_image));
+    	//image2.setImageBitmap(BitmapFactory.decodeFile("images/negative/"+negative_image));
     	Log.i(DEBUG_TAG, method+" positive_image "+positive_image);
     	Log.i(DEBUG_TAG, method+" negative_image "+negative_image);
     	//File pos_file1 = new File(positive_image);
-    	File pos_file2 = new File("images/positive/"+positive_image);
-    	//File neg_file1 = new File(positive_image);
-    	File neg_file2 = new File("images/negative/"+positive_image);
+    	//File pos_file2 = new File("images/positive/"+positive_image);
+    	///File neg_file1 = new File(positive_image);
+    	//File neg_file2 = new File("images/negative/"+positive_image);
     	//Log.i(DEBUG_TAG, method+" posative_image "+pos_file1.exists());
-    	Log.i(DEBUG_TAG, method+" posative_image "+pos_file2.exists());
+    	//Log.i(DEBUG_TAG, method+" posative_image "+pos_file2.exists());
     	//Log.i(DEBUG_TAG, method+" negative_image "+neg_file1.exists());
-    	Log.i(DEBUG_TAG, method+" negative_image "+neg_file2.exists());
+    	//Log.i(DEBUG_TAG, method+" negative_image "+neg_file2.exists());
+
+    	image1.setImageBitmap(getBitmap("/positive/"+positive_image));
+    	image2.setImageBitmap(getBitmap("/negative/"+negative_image));
     	
     }
     
+    private Bitmap getBitmap(String file_name)
+    {
+    	String method = "";
+    	File location = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/images");
+    	Log.i(DEBUG_TAG, method+" loaction "+location.getAbsolutePath()+" exists? "+location.exists());
+    	File dest = new File(location, file_name);
+    	Log.i(DEBUG_TAG, method+" dest "+dest.getAbsolutePath()+" exists? "+dest.exists());
+    	FileInputStream fis = null;
+    	try
+		{
+			fis = new FileInputStream(dest);
+		} catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return BitmapFactory.decodeStream(fis);
+    }
     private void setup()
     {
     	current_round = 0;

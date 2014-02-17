@@ -1,0 +1,15 @@
+
+
+02-17 --- Still working on the path to the images.
+13:14:40.604: I/ExerciseActivity(334): onCreate build 6
+02-17 13:14:41.460: I/ExerciseActivity(334): getImages positive_images Happiness.jpg
+02-17 13:14:41.460: I/ExerciseActivity(334): getImages positive_images Happy-Face.jpg
+02-17 13:14:41.460: I/ExerciseActivity(334): getImages positive_images People_Different_people_Family_Happiness_026542_.jpg
+02-17 13:14:41.470: I/ExerciseActivity(334): getImages negative_images Sadness.jpg
+02-17 13:14:41.470: I/ExerciseActivity(334): getImages negative_images images-of-sadnessin-my-infinite-sadness-by-sha-1-on-deviantart-ehwaamtg.jpg
+02-17 13:14:41.470: I/ExerciseActivity(334): getImages negative_images sadness_____by_aoao2-d430zrm.jpg
+02-17 13:14:41.480: I/ExerciseActivity(334): loadImages positive_image Happiness.jpg
+02-17 13:14:41.480: I/ExerciseActivity(334): loadImages negative_image Sadness.jpg
+02-17 13:14:41.480: I/ExerciseActivity(334):  loaction /mnt/sdcard/images exists? false
+02-17 13:14:41.502: I/ExerciseActivity(334):  dest /mnt/sdcard/images/positive/Happiness.jpg exists? false
+
