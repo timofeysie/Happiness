@@ -10,5 +10,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="about_paragraph_1">The Happiness app is a more friendly and less clinical implementation of something called a “Dot Probe Task”.  This task is used by psychologists to study how people’s attention is drawn by things like frowning faces or smiles and the extent of the attention paid to them.  It was originally called the “Visual Probe Task” by MacLeod, Mathews, & Tata in 1986 and developed as the “Dot Probe Task with Faces” by Mogg & Bradley in 1998.  It has also been used to help people stop smoking.</string>
+    <string name="about_paragraph_2">We use the theory behind the task in this app to practice positive reinforcement so that the user can learn to focus more on the positive rather than the negative.  This is a kind of cognitive-behavioral therapy that may help lessen an automatic response people have to focus on the negative.  We believe that if you want happiness, then it will help to practice happiness.</string>
+    <string name="about_the_happiness_app">About the Happiness App</string>
 
 </resources>

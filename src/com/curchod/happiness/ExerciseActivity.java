@@ -72,7 +72,7 @@ public class ExerciseActivity extends Activity
     {
     	String method = "";
     	File location = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/images");
-    	Log.i(DEBUG_TAG, method+" loaction "+location.getAbsolutePath()+" exists? "+location.exists());
+    	Log.i(DEBUG_TAG, method+" location "+location.getAbsolutePath()+" exists? "+location.exists());
     	File dest = new File(location, file_name);
     	Log.i(DEBUG_TAG, method+" dest "+dest.getAbsolutePath()+" exists? "+dest.exists());
     	FileInputStream fis = null;

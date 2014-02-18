@@ -13,3 +13,9 @@
 02-17 13:14:41.480: I/ExerciseActivity(334):  loaction /mnt/sdcard/images exists? false
 02-17 13:14:41.502: I/ExerciseActivity(334):  dest /mnt/sdcard/images/positive/Happiness.jpg exists? false
 
+Try putting the image folders in an 'images' folder, as that location folder is listed as not exisiting.
+Even though the images are in those two folders in the Assets folder, the directory from within the code:
+Environment.getExternalStorageDirectory().getAbsolutePath()+ "/images"
+or 
+BitmapFactory.decodeFile("images/positive/"+positive_image)
+don't exist.
