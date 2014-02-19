@@ -8,12 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
     <Button
         android:id="@+id/exercise_button"
         android:layout_width="wrap_content"
@@ -33,5 +27,15 @@
         android:layout_alignRight="@+id/exercise_button"
         android:layout_marginBottom="33dp"
         android:text="@string/about_happiness" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/exercise_button"
+        android:layout_alignParentTop="true"
+        android:maxHeight="@dimen/activity_vertical_margin"
+        android:maxWidth="@dimen/activity_vertical_margin"
+        android:src="@drawable/happy_dog" />
 
 </RelativeLayout>

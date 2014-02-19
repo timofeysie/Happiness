@@ -47,7 +47,7 @@ public class ExerciseActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
         String method = "onCreate";
-        Log.i(DEBUG_TAG, method+" build 22c");
+        Log.i(DEBUG_TAG, method+" build 25e");
         setup();
         getImages();
         chooseImageType();
@@ -64,16 +64,20 @@ public class ExerciseActivity extends Activity
              public void run() 
              { 
             	 current_round++;
-            	 if (current_round>positive_images.length)
+            	 if (current_round>=positive_images.length)
             	 {
             		 roundOver();
+            	 } else
+            	 {
+            		 chooseImageType();
+            		 loadImages();
+            		 setupButtons();
+            		 hideView(false);
+            		 button1.setEnabled(true);
+            		 button2.setEnabled(true);
             	 }
-                 chooseImageType();
-                 loadImages();
-                 setupButtons();
-                 hideView(false);
              } 
-        }, 5000); 
+        }, 1000); 
     }
     
     private void hideView(boolean hide)
@@ -188,8 +192,8 @@ public class ExerciseActivity extends Activity
     	image2 = (ImageView)findViewById(R.id.imageView2);
     	image1.setImageBitmap(image1_bitmap);
     	image2.setImageBitmap(image2_bitmap);
-    	int width=100;
-    	int height=100;
+    	int width=225;
+    	int height=225;
     	Bitmap resized_bitmap1 = Bitmap.createScaledBitmap(image1_bitmap, width, height, true);
     	Bitmap resized_bitmap2 = Bitmap.createScaledBitmap(image2_bitmap, width, height, true);
     	image1.setImageBitmap(resized_bitmap1);
