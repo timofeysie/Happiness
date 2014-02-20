@@ -6,9 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.curchod.happiness.util.Constants;
+
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -20,13 +25,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+
+/**
+ * When the correct button is pressed,
+ * hideNegateivePictureAndWait();
+ * hideAllViews(true);
+ * waitAndIncrementRound();
+ * 
+ * @author user
+ *
+ */
 public class ExerciseActivity extends Activity 
 {
 
+	final Context context = this;
 	private static final String DEBUG_TAG = "ExerciseActivity";
 	String[] positive_images;
 	String[] negative_images;
@@ -41,28 +61,103 @@ public class ExerciseActivity extends Activity
 	private int positive;
 	private int negative;
 	
+	private Editor shared_editor;
+	private SharedPreferences shared_preferences;
+	private String current_folder;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
         String method = "onCreate";
-        Log.i(DEBUG_TAG, method+" build 25e");
+        Log.i(DEBUG_TAG, method+": build 32");
         setup();
+        getCurrentFolder();
         getImages();
         chooseImageType();
         loadImages();
         setupButtons();
     }
     
+    /**
+     * Load the current folder from the shared preferences.
+     */
+    private void getCurrentFolder()
+    {
+    	String method = "getCurrentFolder";
+    	this.shared_preferences = context.getSharedPreferences(Constants.PREFERENCES, Activity.MODE_PRIVATE);
+        this.shared_editor = shared_preferences.edit();
+        current_folder = shared_preferences.getString(Constants.FOLDER, "");
+        if (current_folder == null)
+        {
+        	current_folder = "";
+        }
+        Log.i(DEBUG_TAG, method+": current folder: "+current_folder);
+    }
+    
+    /**
+     * Hide the negative image and button and positive botton.
+     * Slide the positive image into the center.
+     * Then hide everything and wait for a few seconds.
+     * Then start the next round.
+     */
     private void nextRound()
     {
-    	hideView(true);
+    	hideNegateivePictureAndSlide();
+    	hideAllViews(true);
+    	waitAndIncrementRound();
+    }
+    
+    /**
+     * Hide the negative button and image and start the slide animation.
+     * Down if the positive image is image1, up if not.
+     */
+    private void hideNegateivePictureAndSlide()
+    {
+    	if (positive == 1)
+        {
+    		button1.setVisibility(View.GONE);
+        	button2.setVisibility(View.GONE);
+        	image2.setVisibility(View.GONE);
+        } else
+        {
+        	button2.setVisibility(View.GONE);
+        	button1.setVisibility(View.GONE);
+    		image1.setVisibility(View.GONE);
+        }
+    	startSlide(); 
     	Handler handler = new Handler(); 
         handler.postDelayed(new Runnable() 
         { 
              public void run() 
              { 
+            	 waitAndWithBlankScrren();
+             } 
+        }, 2500); 
+    }
+    
+    private void waitAndWithBlankScrren()
+    {
+    	hideAllViews(true);
+    	Handler handler = new Handler(); 
+        handler.postDelayed(new Runnable() 
+        { 
+             public void run() 
+             { 
+            	 waitAndIncrementRound();
+             } 
+        }, 800); 
+    }
+    
+    private void waitAndIncrementRound()
+    {
+    	Handler handler = new Handler(); 
+        handler.postDelayed(new Runnable() 
+        { 
+             public void run() 
+             { 
+            	 hideAllViews(true);
             	 current_round++;
             	 if (current_round>=positive_images.length)
             	 {
@@ -72,15 +167,50 @@ public class ExerciseActivity extends Activity
             		 chooseImageType();
             		 loadImages();
             		 setupButtons();
-            		 hideView(false);
+            		 hideAllViews(false);
             		 button1.setEnabled(true);
             		 button2.setEnabled(true);
             	 }
              } 
-        }, 1000); 
+        }, 500); 
     }
     
-    private void hideView(boolean hide)
+    private void startSlide()
+	{
+    	if (positive == 1)
+        {
+    		Animation down =  AnimationUtils.loadAnimation(this, R.anim.slide_down);
+    		down.setAnimationListener(new AnimationListener() {
+                @Override
+                public void onAnimationEnd(Animation animation)
+                {image1.setVisibility(View.GONE);}
+				@Override
+				public void onAnimationRepeat(Animation arg0) {}
+				@Override
+				public void onAnimationStart(Animation arg0) {}
+            });
+    		image1.startAnimation(down);
+        } else
+        {
+        	Animation up =  AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        	up.setAnimationListener(new AnimationListener() {
+                @Override
+                public void onAnimationEnd(Animation animation)
+                {image2.setVisibility(View.GONE);}
+				@Override
+				public void onAnimationRepeat(Animation arg0) {}
+				@Override
+				public void onAnimationStart(Animation arg0) {}
+            });
+        	image2.startAnimation(up);
+        }
+	}
+    
+    /**
+     * To hide the images and buttons pass true, otherwise false will show them.
+     * @param hide
+     */
+    private void hideAllViews(boolean hide)
     {
     	if (hide)
     	{
@@ -121,7 +251,7 @@ public class ExerciseActivity extends Activity
                 {
                 	Log.i(DEBUG_TAG, method+" button 1 is happy.");
                 	Log.i(DEBUG_TAG, method+" button 2 is sad.");
-                	nextRound();
+                	hideNegateivePictureAndSlide();
                 } else
                 {
                 	Log.i(DEBUG_TAG, method+" button 1 is sad.");
@@ -141,7 +271,7 @@ public class ExerciseActivity extends Activity
                 {
                 	Log.i(DEBUG_TAG, method+" button 1 is sad.");
                 	Log.i(DEBUG_TAG, method+" button 2 is happy.");
-                	nextRound();
+                	hideNegateivePictureAndSlide();
                 } else
                 {
                 	Log.i(DEBUG_TAG, method+" button 1 is happy.");
@@ -152,6 +282,11 @@ public class ExerciseActivity extends Activity
         });
     }
     
+    /**
+     * Choose a random number between 1 and 2.
+     * If the number is 1, then the first image and button will be used for the positive.
+     * If it's two, then use the second button and image, and the other ones for the negative.
+     */
     private void chooseImageType()
     {
     	String method = "chooseImageType";
@@ -181,13 +316,15 @@ public class ExerciseActivity extends Activity
     	Bitmap image2_bitmap = null;
     	if (positive == 1)
     	{
-    		image1_bitmap = getBitmapFromAsset("positive/"+positive_image);
-    		image2_bitmap = getBitmapFromAsset("negative/"+negative_image);
+    		image1_bitmap = getBitmapFromAsset(current_folder+"positive/"+positive_image);
+    		image2_bitmap = getBitmapFromAsset(current_folder+"negative/"+negative_image);
     	} else
     	{
-    		image2_bitmap = getBitmapFromAsset("positive/"+positive_image);
-    		image1_bitmap = getBitmapFromAsset("negative/"+negative_image);
+    		image2_bitmap = getBitmapFromAsset(current_folder+"positive/"+positive_image);
+    		image1_bitmap = getBitmapFromAsset(current_folder+"negative/"+negative_image);
     	}
+    	image1 = null;
+    	image2 = null; // reset the animation locations
     	image1 = (ImageView)findViewById(R.id.imageView1);
     	image2 = (ImageView)findViewById(R.id.imageView2);
     	image1.setImageBitmap(image1_bitmap);
@@ -225,14 +362,16 @@ public class ExerciseActivity extends Activity
         POSITIVE, NEGATIVE
     }
 
-
+    /**
+     * Load all the images from the positive and negative folders.
+     */
     private void getImages()
 	{
 		String method = "getImages";
 		try
 		{
-			positive_images = this.getResources().getAssets().list("positive");
-			negative_images = this.getResources().getAssets().list("negative");
+			positive_images = this.getResources().getAssets().list(current_folder+"positive");
+			negative_images = this.getResources().getAssets().list(current_folder+"negative");
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
@@ -247,32 +386,6 @@ public class ExerciseActivity extends Activity
 		{
 			Log.i(DEBUG_TAG, method+" negative_images "+file);
 		}
-	}
-	
-
-    private void showImages()
-	{
-		//LinearLayOut Setup
-        LinearLayout linearLayout= new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        linearLayout.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
-
-        //ImageView Setup
-        ImageView imageView = new ImageView(this);
-        //setting image resource
-        //imageView.setImageResource(R.drawable.play);
-        //setting image position
-        imageView.setLayoutParams(new LayoutParams(
-        		LayoutParams.MATCH_PARENT,
-        		LayoutParams.WRAP_CONTENT));
-
-        //adding view to layout
-        linearLayout.addView(imageView);
-        //make visible to program
-        setContentView(linearLayout);
 	}
 
     @Override
