@@ -71,7 +71,7 @@ public class ExerciseActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
         String method = "onCreate";
-        Log.i(DEBUG_TAG, method+": build 32");
+        Log.i(DEBUG_TAG, method+": build 37");
         setup();
         getCurrentFolder();
         getImages();
@@ -91,9 +91,19 @@ public class ExerciseActivity extends Activity
         current_folder = shared_preferences.getString(Constants.FOLDER, "");
         if (current_folder == null)
         {
-        	current_folder = "";
+        	current_folder = Constants.DEFAULT;
+        	Log.i(DEBUG_TAG, method+": first time? use dfault: "+current_folder);
         }
-        Log.i(DEBUG_TAG, method+": current folder: "+current_folder);
+        if (!current_folder.equals(Constants.DEFAULT))
+        {
+        	// user created directroy
+        	String current_path = context.getFilesDir().getAbsolutePath();
+        	current_folder = current_path+"/"+current_folder;
+        	Log.i(DEBUG_TAG, method+": added path to current folder: "+current_folder);
+        } else
+        {
+        	Log.i(DEBUG_TAG, method+": use dfault folder");
+        }
     }
     
     /**
@@ -304,7 +314,11 @@ public class ExerciseActivity extends Activity
     	Log.i(DEBUG_TAG, method+" positive "+positive+" negative "+negative);
     }
     
-    
+    /**
+     * When we load the images, if positive is 1, then we put the positive images in image1_bitmap,
+     * and the negative images in image2_bitmap.  We set the width and height at 225 and then
+     * put the images in their respective layout images.
+     */
     private void loadImages()
     {
     	String method = "loadImages";
@@ -316,12 +330,12 @@ public class ExerciseActivity extends Activity
     	Bitmap image2_bitmap = null;
     	if (positive == 1)
     	{
-    		image1_bitmap = getBitmapFromAsset(current_folder+"positive/"+positive_image);
-    		image2_bitmap = getBitmapFromAsset(current_folder+"negative/"+negative_image);
+    		image1_bitmap = getBitmapFromAsset(current_folder+"/"+Constants.POSITIVE+"/"+positive_image);
+    		image2_bitmap = getBitmapFromAsset(current_folder+"/"+Constants.NEGATIVE+"/"+negative_image);
     	} else
     	{
-    		image2_bitmap = getBitmapFromAsset(current_folder+"positive/"+positive_image);
-    		image1_bitmap = getBitmapFromAsset(current_folder+"negative/"+negative_image);
+    		image2_bitmap = getBitmapFromAsset(current_folder+"/"+Constants.POSITIVE+"/"+positive_image);
+    		image1_bitmap = getBitmapFromAsset(current_folder+"/"+Constants.NEGATIVE+"/"+negative_image);
     	}
     	image1 = null;
     	image2 = null; // reset the animation locations
@@ -368,14 +382,26 @@ public class ExerciseActivity extends Activity
     private void getImages()
 	{
 		String method = "getImages";
-		try
+		if (current_folder.equals(Constants.DEFAULT))
 		{
-			positive_images = this.getResources().getAssets().list(current_folder+"positive");
-			negative_images = this.getResources().getAssets().list(current_folder+"negative");
-		} catch (IOException e)
+			try
+			{
+				positive_images = this.getResources().getAssets().list(current_folder+"/"+Constants.POSITIVE);
+				negative_images = this.getResources().getAssets().list(current_folder+"/"+Constants.NEGATIVE);
+				Log.i(DEBUG_TAG, method+" default positive_images path "+current_folder+"/"+Constants.POSITIVE);
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String path = context.getFilesDir().getAbsolutePath();
+			File positive_files = new File(path+"/"+Constants.POSITIVE);
+			File negative_files = new File(path+"/"+Constants.NEGATIVE);
+			Log.i(DEBUG_TAG, method+" positive_images path "+path+"/"+Constants.POSITIVE);
+			positive_images = positive_files.list();
+			negative_images = negative_files.list();
 		}
 		
 		for (String file:positive_images)

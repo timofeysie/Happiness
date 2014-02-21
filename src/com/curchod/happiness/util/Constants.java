@@ -3,6 +3,7 @@ package com.curchod.happiness.util;
 public class Constants
 {
 
+	public static final String DEFAULT = "default";
 	public static final String FOLDER = "folder";
 	public static final String PREFERENCES = "preferences";
 	public static final String POSITIVE = "positive";
