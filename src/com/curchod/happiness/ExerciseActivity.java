@@ -71,7 +71,7 @@ public class ExerciseActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
         String method = "onCreate";
-        Log.i(DEBUG_TAG, method+": build 37");
+        Log.i(DEBUG_TAG, method+": build 38");
         setup();
         getCurrentFolder();
         getImages();
@@ -397,11 +397,20 @@ public class ExerciseActivity extends Activity
 		} else
 		{
 			String path = context.getFilesDir().getAbsolutePath();
-			File positive_files = new File(path+"/"+Constants.POSITIVE);
-			File negative_files = new File(path+"/"+Constants.NEGATIVE);
-			Log.i(DEBUG_TAG, method+" positive_images path "+path+"/"+Constants.POSITIVE);
-			positive_images = positive_files.list();
-			negative_images = negative_files.list();
+			String path_to_positive_files = path+"/"+current_folder+"/"+Constants.POSITIVE;
+			String path_to_negative_files = path+"/"+current_folder+"/"+Constants.NEGATIVE;
+			File positive_files = new File(path_to_positive_files);
+			File negative_files = new File(path_to_negative_files);
+			Log.i(DEBUG_TAG, method+" path_to_positive_files "+path_to_positive_files);
+			Log.i(DEBUG_TAG, method+" path_to_negative_files "+path_to_negative_files);
+			if (positive_files.exists())
+			{
+				positive_images = positive_files.list();
+				negative_images = negative_files.list();
+			} else
+			{
+				Log.i(DEBUG_TAG, method+" no psoitive files folder");
+			}
 		}
 		
 		for (String file:positive_images)

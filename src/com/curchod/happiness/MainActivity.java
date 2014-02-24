@@ -113,6 +113,10 @@ public class MainActivity extends Activity
     	return super.onOptionsItemSelected(item);
     }
 	
+	/**
+	 * Throw up an AlertDialog to get the name of the new Happiness folder to create.
+	 * Then start up the CreateActivity and let the user go to work.
+	 */
 	private void promptForNewFolderName()
     {
     	final String method = "promptForNewFolderName";
