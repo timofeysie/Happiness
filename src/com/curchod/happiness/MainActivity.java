@@ -45,7 +45,7 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		String method = "onCreate";
-		Log.i(DEBUG_TAG, method+": build 25");
+		Log.i(DEBUG_TAG, method+": build 26");
 		this.shared_preferences = context.getSharedPreferences(Constants.PREFERENCES, Activity.MODE_PRIVATE);
         this.shared_editor = shared_preferences.edit();
         String current_folder = shared_preferences.getString(Constants.FOLDER, "");

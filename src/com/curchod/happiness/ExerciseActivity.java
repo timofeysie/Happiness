@@ -71,7 +71,7 @@ public class ExerciseActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
         String method = "onCreate";
-        Log.i(DEBUG_TAG, method+": build 38");
+        Log.i(DEBUG_TAG, method+": build 39");
         setup();
         getCurrentFolder();
         getImages();
@@ -92,11 +92,11 @@ public class ExerciseActivity extends Activity
         if (current_folder == null)
         {
         	current_folder = Constants.DEFAULT;
-        	Log.i(DEBUG_TAG, method+": first time? use dfault: "+current_folder);
+        	Log.i(DEBUG_TAG, method+": first time? use default: "+current_folder);
         }
         if (!current_folder.equals(Constants.DEFAULT))
         {
-        	// user created directroy
+        	// user created directory
         	String current_path = context.getFilesDir().getAbsolutePath();
         	current_folder = current_path+"/"+current_folder;
         	Log.i(DEBUG_TAG, method+": added path to current folder: "+current_folder);
