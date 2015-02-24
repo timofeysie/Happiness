@@ -2,14 +2,18 @@
 
 /* Controllers */
 
-var phonecatControllers = angular.module('phonecatControllers', []);
+var controllers = angular.module('phonecatControllers', []);
 
-phonecatControllers.controller('MainController', ['$scope', 'Gallery',
+controllers.controller('MainController', ['$scope', 'Gallery',
   function($scope, Gallery) {
     $scope.galleries = Gallery.query();
   }]);
 
-phonecatControllers.controller('DefaultController', ['$scope', '$routeParams', 
+controllers.controller('AboutController', ['$scope',
+  function($scope) {
+  }]);
+
+controllers.controller('DefaultController', ['$scope', '$routeParams', 
   '$location', 'HappyOrSadService',
   'PositiveService', 'NegativeService', '$timeout',
   function($scope, $routeParams, $location, HappyOrSadService, 
@@ -19,6 +23,8 @@ phonecatControllers.controller('DefaultController', ['$scope', '$routeParams',
     $scope.imageTwoUrl = '';
     $scope.button_one = 'OK';
     $scope.button_two = 'OK';
+    $scope.disableButtonOne = false;
+    $scope.disableButtonTwo = false;
     $scope.answer = 'one';
     $scope.count = 0;
     $scope.end = 0;
@@ -42,6 +48,7 @@ phonecatControllers.controller('DefaultController', ['$scope', '$routeParams',
 
     // Called when the user chooses an image
     $scope.increment = function(type) {
+      //$timeout.cancel(); // if the pause is still goin, stop it.
       var next_randy = Math.random();
       if ((type == 'one' && $scope.answer == 'one') || (type == 'two' && $scope.answer == 'two')) {
         hideImage(type);
@@ -126,23 +133,59 @@ phonecatControllers.controller('DefaultController', ['$scope', '$routeParams',
         });
       } 
     }
-    /* Since the type is the answer, we must hide the opposite image. */
+    /* Since the type is the answer, we must hide the opposite image. 
+    Animate the negative picture to fade away.*/
     function hideImage(type)
     {
+      //$scope.disableButtonOne = true;
+      //$scope.disableButtonTwo = true;
       if (type == 'two')
       {
-        $scope.showImageOne = false;
+        //$scope.showImageOne = false;
+        $("#button_one_id").animate({
+          opacity: 1,
+          left: "+=50",
+          height: "toggle"
+        }, 1200, function() { /* Animation complete, reanimate back to start.*/
+          $(function() {
+            
+            $("#button_one_id").animate({
+          opacity: 1,
+          left: "+=50",
+          height: "toggle"
+        }, 100, function() { /* Animation complete.*/
+        });
+
+
+          })
+        });
       } else
       {
-        $scope.showImageTwo = false;
+        //$scope.showImageTwo = false;
+        $("#button_two_id").animate({
+          opacity: 1,
+          left: "+=50",
+          height: "toggle"
+        }, 1200, function() { /* Animation complete.*/
+          
+          $("#button_two_id").animate({
+          opacity: 1,
+          left: "+=50",
+          height: "toggle"
+        }, 100, function() { /* Animation complete.*/
+        });
+
+        });
       }
-      $timeout(callTimeout, 2000);
+      $timeout(callTimeout, 1210);
     }
 
     function callTimeout(type) {
       console.log("Timeout1 occurred");
       $scope.showImageOne = false;
       $scope.showImageTwo = false;
+      //$scope.disableButtonOne = true;
+      //$scope.disableButtonTwo = true;
       nextRound(type);
     }
   }

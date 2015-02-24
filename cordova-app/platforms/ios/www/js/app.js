@@ -21,6 +21,10 @@ phonecatApp.config(['$routeProvider',
         templateUrl: 'partials/default.html',
         controller: 'DefaultController'
       }).
+      when('/about', {
+        templateUrl: 'partials/about.html',
+        controller: 'AboutController'
+      }).
       otherwise({
         redirectTo: '/main'
       });
