@@ -2,31 +2,31 @@
 
 /* Services */
 
-var phonecatServices = angular.module('phonecatServices', ['ngResource']);
+var happinessServices = angular.module('happinessServices', ['ngResource']);
 
-phonecatServices.factory('Phone', ['$resource',
+happinessServices.factory('Phone', ['$resource',
   	function($resource){
     	return $resource('phones/:phoneId.json', {}, {
       		query: {method:'GET', params:{phoneId:'phones'}, isArray:true}
     	});
 }]);
 
-phonecatServices.factory('Gallery',
+happinessServices.factory('Gallery',
     function($resource){
         return $resource('data/galleries.json');
 });
 
-phonecatServices.factory('PositiveService',
+happinessServices.factory('PositiveService',
 	function($resource){
     	return $resource('data/positive.json');
 });
 
-phonecatServices.factory('NegativeService',
+happinessServices.factory('NegativeService',
 	function($resource){
     return $resource('data/negative.json');
 });
 
-phonecatServices.factory('HappyOrSadService',
+happinessServices.factory('HappyOrSadService',
 	function($resource){
     	return $resource('data/positive.json'), {}, {
     		query: function(type) {

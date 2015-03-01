@@ -1,5 +1,5 @@
 'use strict';
-angular.module("phonecatApp.profileController", [])
+angular.module("happinessApp.profileController", [])
 .controller('ProfileController',
     function ($scope, $rootScope, $route, ProfileServices, $log) {
     var professionalDetail = ProfileServices.getProfessionalDetail(),

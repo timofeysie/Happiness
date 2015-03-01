@@ -1,17 +1,17 @@
 'use strict';
 /* App Module */
-var phonecatApp = angular.module('phonecatApp', [
+var happinessApp = angular.module('happinessApp', [
   'ngRoute',
   'ngResource',
-  'phonecatAnimations',
-  'phonecatControllers',
-  'phonecatFilters',
-  'phonecatServices',
-  'phonecatApp.profileController',
-  'phonecatApp.profileServices'
+  'happinessAnimations',
+  'happinessControllers',
+  'happinessFilters',
+  'happinessServices',
+  'happinessApp.profileController',
+  'happinessApp.profileServices'
 ]);
 
-phonecatApp.config(['$routeProvider',
+happinessApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/main', {
@@ -35,7 +35,7 @@ phonecatApp.config(['$routeProvider',
       });
   }]);
 
-phonecatApp.directive("responsiveImage",
+happinessApp.directive("responsiveImage",
     ["$log","$window",
         function ($log, $window) {
             return {

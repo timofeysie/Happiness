@@ -4,7 +4,7 @@
 
 describe('filter', function() {
 
-  beforeEach(module('phonecatFilters'));
+  beforeEach(module('happinessFilters'));
 
 
   describe('checkmark', function() {

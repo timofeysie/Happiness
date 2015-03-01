@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var controllers = angular.module('phonecatControllers', []);
+var controllers = angular.module('happinessControllers', []);
 
 controllers.controller('MainController', ['$scope', 'Gallery',
   function($scope, Gallery) {
@@ -177,7 +177,7 @@ controllers.controller('DefaultController', ['$scope', '$routeParams',
 
         });
       }
-      $timeout(callTimeout, 1210);
+      $timeout(callTimeout, 1200);
     }
 
     function callTimeout(type) {

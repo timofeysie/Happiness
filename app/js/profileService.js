@@ -1,4 +1,4 @@
-angular.module('phonecatApp.profileServices', [])
+angular.module('happinessApp.profileServices', [])
 .service('ProfileServices',["$resource", function($resource){
    return{
        getPersonalDetail : function(){
