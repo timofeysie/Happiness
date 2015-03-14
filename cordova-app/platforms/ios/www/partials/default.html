@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6 .col-md-4">
+      <!--Body content-->
+      <p>
+        <div class="phones" 
+          ng-class="{active:mainOneUrl==img}"
+          ng-show="showImageOne">
+          <responsive-session-image
+                    number="one"
+                    imgesrc="{{imageTwoUrl}}"
+                    imagealt="profile">
+          </responsive-session-image>
+            <P><p><button id="button_one_id"
+              ng-click="increment('one')"
+              ng-disabled="disableButtonOne">{{button_one}}</button>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 .col-md-4">
+      <div class="phones"
+        ng-class="{active:mainTwoUrl==img}"
+        ng-show="showImageTwo">
+          <img 
+          id="button_two_id"
+          height="175" 
+          ng-src="{{imageTwoUrl}}" 
+          ng-click="increment('two')">
+          <P><p><button id="button_two_id"
+          ng-click="increment('two')"
+          ng-disabled="disableButtonTwo">{{button_two}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

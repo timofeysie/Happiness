@@ -1,0 +1,20 @@
+{
+    "aboutme":"With a background in Java and Android, I specialize in hybrid web app development using Cordova and other frameworks to create responsive projects for the web and mobile devices from a single code base.  Save money with one dev team and get more features!",
+    "years":11,
+    "roles":["Mobile Developer", "JavaScript Developer", "Front End Lead","Java Developer"],
+    "languages":["JavaScript", "Java", "Groovy", "C#","Ruby"],
+    "webdevelopment":["HTML5","CSS3","AngularJS","Jquery","BootStrap","Jasmin", "Famo.us", "PhoneGap", "Ionic"],
+    "tools":["SASS","COMPASS","GRUNT","GIT","GULP","BOWER","YEOMAN", "MAVEN", "ANT"],
+    "ides":["WebStorm", "Cloud9", "Eclipse", "Sublime"],
+    "social":{
+        "linkedin":"au.linkedin.com/pub/timothy-curchod/11/475/8/en",
+        "facebook":"https://www.facebook.com/timspace",
+        "twitter":"https://twitter.com/timofey",
+        "googleplus":"https://plus.google.com/u/0/110046765617277957675/posts"
+    },
+    "contact":{
+        "email":"sandeeppateltech@gmail.com",
+        "mobile":"+91-8105469950",
+        "address":"Whitefield Bangalore 560087"
+    }
+}
